@@ -3,6 +3,7 @@ on:
   workflow_dispatch:
   schedule:
     - cron: "0 10 */3 * *"
+    - cron: "20 10 */3 * *"
 
 jobs:
   build:
@@ -32,9 +33,10 @@ jobs:
           git config --local user.name "${{ secrets.USER_NAME }}"
           #echo "https://github.com/${{ github.repository }}:${{ secrets.REPO_TOKEN }}" > .git-credentials
           git add .
-          git commit -m "书源|自动更新" -a
+          git commit -m "书源|自动更新" -a || true
           git commit -m "Add new JSON files" || echo "No changes to commit"
           git push
+
           
       - name: Telegram通知
         run: |
